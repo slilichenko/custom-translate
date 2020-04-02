@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Glossary</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <style>
+    table {
+      border-collapse: collapse;
+      border: 1px solid;
+      border-color: darkgray;
+      padding: 3px 2px
+    }
+
+    table thead th {
+      font-weight: bold;
+      color: #FFFFFF;
+      background: #1C6EA4;
+    }
+
+    table td, table th {
+      border: 1px solid lightgray;
+      padding: 3px 2px
+    }
+  </style>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+
+<div th:unless="${#strings.isEmpty(message)}" style="margin-top: 20px">
+  <span th:text="${message}"
+        style="border: 1px solid blue; font-weight: bold; font-size: medium; padding: 10px">Message</span>
+</div>
+
+<div style="margin-top: 20px">
+  <div>Glossary location: <span th:text="${glossaryLocation}">location</span></div>
+  <table style="margin-top: 20px">
+    <thead>
+    <tr>
+      <th th:each="header : ${glossaryHeaders}" th:text="${header}">
+        Header
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="row : ${glossaryData}">
+      <td th:each="column : ${row}" th:text="${column}">Data</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div style="margin-top: 40px">
+  <form method="post">
+    <button type="submit">Reload Glossary into Google Translation</button>
+  </form>
+</div>
+</body>
+</html>

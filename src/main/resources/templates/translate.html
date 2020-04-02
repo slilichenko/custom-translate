@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Translation Demo</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+
+<div style="font-weight: bold; margin-top: 20px">English text (up to 1,024 lines) or HTML to translate:
+</div>
+
+<form th:action="@{/translate}" th:object="${translation}" method="post">
+  <textarea rows=10 cols=80 name=source th:field="*{source}"></textarea>
+
+  <br/>
+  <button type="Submit">Translate</button>
+
+  <select th:field="*{mimeType}">
+    <option th:each="mime : ${allMimeTypes}" th:value="${mime.type}" th:text="${mime.name}">mime type</option>
+  </select>
+
+  into
+
+  <select th:field="*{targetLanguageCode}">
+    <option th:each="language : ${allLanguages}" th:value="${language.code}" th:text="${language.name}">target language</option>
+  </select>
+
+  using
+
+  <select th:field="*{modelId}">
+    <option th:each="model : ${allTranslationModels}" th:value="${model.id}" th:text="${model.name}">translation model</option>
+  </select>
+</form>
+</div>
+
+<div th:unless="${#strings.isEmpty(translation.base)}" style="margin-top: 20px;">
+  <div style="font-weight: bold">Default translation:</div>
+  <textarea rows=10 cols=80 th:text="${translation.base}"></textarea>
+</div>
+
+<div th:unless="${#strings.isEmpty(translation.glossaryBased)}" style="margin-top: 20px;">
+  <div style="font-weight: bold">Translation using glossary:</div>
+  <textarea rows=10 cols=80 th:text="${translation.glossaryBased}"></textarea>
+</div>
+</body>
+</html>

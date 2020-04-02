@@ -1,0 +1,23 @@
+runtime: java11
+
+env_variables:
+  SPRING_PROFILES_ACTIVE: "gcp"
+handlers:
+  - url: /.*
+    script: this field is required, but ignored
+manual_scaling:
+  instances: 1
+
+liveness_check:
+  path: "/liveness-check"
+  check_interval_sec: 30
+  timeout_sec: 4
+  failure_threshold: 2
+  success_threshold: 2
+
+readiness_check:
+  path: "/readiness-check"
+  check_interval_sec: 30
+  timeout_sec: 4
+  failure_threshold: 2
+  success_threshold: 2
